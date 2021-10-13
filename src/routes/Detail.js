@@ -13,6 +13,7 @@ const getMovie = gql`
             language
             rating
             description_intro
+            isLiked @client
         }
         suggestions(id: $id) {
             id
@@ -65,13 +66,11 @@ export default () => {
         variables: { id: parseInt(id) }
     })
 
-    console.log(data)
-
     return (
         <Container>
             <Column>
                 <Title>
-                    {loading ? "loading..." : `${data.movie.title}`}
+                    {loading ? "Loading..." : `${data.movie.title} ${data.movie.isLiked ? "💖" : "😞"}`}
                 </Title>
                 <Subtitle>
                     {data?.movie?.language} · {data?.movie?.rating}
